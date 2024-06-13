@@ -9,7 +9,7 @@ requires-python = ">=3.10"
 
 [project.optional-dependencies]
 caching = ["aiocache"]
-test = ["pytest", "pytest-asyncio"]
+test = ["pytest", "pytest-asyncio", "pyright"]
 
 [tool.poetry]
 authors = [
@@ -36,6 +36,7 @@ version = "0.2.1"
 aiohttp = "^3.8.4"
 pydantic = "^2.0.1"
 python = "^3.10"
+aiocache = {version = "^0.12.2", optional = true}
 
 [tool.poetry.extras]
 caching = ["aiocache"]
@@ -53,6 +54,7 @@ optional = true
 [tool.poetry.group.test.dependencies]
 pytest = "^8.2.2"
 pytest-asyncio = "^0.23.7"
+pyright = "^1.1.367"
 
 [build-system]
 build-backend = "poetry.core.masonry.api"
@@ -63,3 +65,15 @@ addopts = [
   "--import-mode=importlib",
 ]
 asyncio_mode = "auto"
+
+[tool.pyright]
+include = ["kuro"]
+exclude = ["**/__init__.py", "tests/**"]
+venvPath = "."
+venv = ".venv"
+
+pythonVersion = "3.10"
+typeCheckingMode = "strict"
+
+reportMissingTypeStubs = false
+reportUnusedFunction = false

@@ -49,7 +49,7 @@ class BaseClient(abc.ABC):
         cookies: CookieOrHeader | None = None,
         *,
         lang: types.Lang = types.Lang.ENGLISH,
-        cache: aiocache.Cache | None = None,
+        cache: aiocache.BaseCache | None = None,
         debug: bool = False,
     ) -> None:
         self.cookies = parse_cookie(cookies) if cookies else {}
@@ -101,8 +101,8 @@ class BaseClient(abc.ABC):
         self._request_hook(method, url, params=params, data=data, headers=headers, **kwargs)
         key = self._gen_cache_key(url, method, params, data, headers, kwargs)
 
-        if use_cache and self.cache and (cached := await self.cache.get(key)):
-            return cached
+        if use_cache and self.cache and (cached := await self.cache.get(key)):  # type: ignore
+            return cached  # type: ignore
 
         async with (
             aiohttp.ClientSession() as session,
@@ -118,7 +118,7 @@ class BaseClient(abc.ABC):
         ):
             data = await response.json()
             if use_cache and self.cache:
-                await self.cache.set(key, data)
+                await self.cache.set(key, data)  # type: ignore
 
         return data
 

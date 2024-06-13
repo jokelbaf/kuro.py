@@ -1,4 +1,4 @@
-name: Run tests
+name: Run type checks
 
 on:
   push:
@@ -26,6 +26,6 @@ jobs:
           python -m pip install --upgrade pip
           pip install .[test]
 
-      - name: Run Pytest
+      - name: Run Pyright
         run: |
-          pytest
+          pyright
